@@ -2,10 +2,8 @@
 
 - name: Define installation directory for maven
   set_fact:
-   install_dir: "/opt/maven"
-   base_url: "https://archive.apache.org/dist/maven"
-
-- name: Ensure final Maven root installation directory exists
-  file:
-   path: "{{ install_dir }}"
-   state: directory
+   install_dir: "/opt/maven/maven-$v_major$v_minor"
+   url_3_x: "https://archive.apache.org/dist/maven/maven-$v_major/$v_major$v_minor\
+   /binaries/apache-maven-$v_major$v_minor-bin.tar.gz"
+   url_2_x: "https://archive.apache.org/dist/maven/binaries/apache-maven-$v_major$v_minor-bin.tar.gz"
+   dest_archive: "/tmp/maven-$v_major$v_minor.tar.gz"

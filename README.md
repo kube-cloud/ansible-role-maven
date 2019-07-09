@@ -1,48 +1,57 @@
-Role Name
-=========
+# Ansible Linux based Java role
 
-A brief description of the role goes here.
+![Python](https://img.shields.io/pypi/pyversions/testinfra.svg?style=flat)
+![Licence](https://img.shields.io/github/license/kube-cloud/ansible-role-maven.svg?style=flat)
+![Travis Build](https://img.shields.io/travis/kube-cloud/ansible-role-maven.svg?style=flat)
 
-Requirements
-------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should
-be mentioned here. For instance, if the role uses the EC2 module, it may be a
-good idea to mention in this section that the boto package is required.
+Ansible role used to install Maven on Linux based Operating System.
 
-Role Variables
---------------
+[![](https://kube-cloud.com/images/branding/logo/kubecloud-logo-single_writing_horizontal_color_300x112px.png)](https://www.kube-cloud.com/)
+<img width="200" src="https://getvectorlogo.com/wp-content/uploads/2019/01/red-hat-ansible-vector-logo.png">  
 
-A description of the settable variables for this role should go here, including
-any variables that are in defaults/main.yml, vars/main.yml, and any variables
-that can/should be set via parameters to the role. Any variables that are read
-from other roles and/or the global scope (ie. hostvars, group vars, etc.) should
-be mentioned here as well.
+# Supported Version
 
-Dependencies
-------------
+* Apache Maven 2.x/3.x
 
-A list of other roles hosted on Galaxy should go here, plus any details in
-regards to parameters that may need to be set for other roles, or variables that
-are used from other roles.
+# Supported OS
 
-Example Playbook
-----------------
+* CentOS 6/7
+* RedHat 6/7
+* Ubuntu Trusty/Xenial/Bionic
+* Debian Jessie/Strech
 
-Including an example of how to use your role (for instance, with variables
-passed in as parameters) is always nice for users too:
+# Depend On
 
-    - hosts: servers
-      roles:
-         - { role: ansible-role-maven, x: 42 }
+* jetune.java
 
-License
--------
+# Usage
 
-BSD
+* Install Role ``` ansible-galaxy install jetune.maven ```
+* use in your playbook
+```
+- hosts: all
 
-Author Information
-------------------
+  roles:
+    - jetune.maven
 
-An optional section for the role authors to include contact information, or a
-website (HTML is not allowed).
+  vars:
+    
+    # Configure jetune.java role
+	__java_packages:
+
+ 	 # JDK packages to install from repo (Open JDK version 8, install alrenative with priority 100 )
+ 	 - from_repo: true
+ 	 v_major: 8
+ 	 alternative_priority: 100
+ 	 implementation: OPENJDK
+ 	
+   # Configure jetune.maven role 
+   __maven_packages:
+    - v_major: 3
+      v_minor: .6.1
+      default: true
+
+```
+
+* You can install more than one Maven version

@@ -1,2 +1,17 @@
 ---
-# tasks file for ansible-role-maven
+
+- name: Create installation directories
+  file:
+   path: "{{ install_dir | replace('$v_major', item.v_major) | replace('$v_minor', item.v_minor) }}"
+   state: directory
+  with_items: "{{ __maven_packages }}"
+
+- name: Unarchive Downloaded maven archives
+  unarchive:
+   src: "{{ dest_archive | replace('$v_major', item.v_major) | replace('$v_minor', item.v_minor) }}"
+   dest: "{{ install_dir | replace('$v_major', item.v_major) | replace('$v_minor', item.v_minor) }}"
+   creates: "{{ install_dir | replace('$v_major', item.v_major) | replace('$v_minor', item.v_minor) }}/bin/mvn"
+   remote_src: true
+   extra_opts:
+    - --strip-components=1
+  with_items: "{{ __maven_packages }}"
