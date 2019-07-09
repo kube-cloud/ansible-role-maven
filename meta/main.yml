@@ -38,4 +38,4 @@ galaxy_info:
         - maven
 
 dependencies:
-    - jetune.java
+    - {role: jetune.java}

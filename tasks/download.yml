@@ -1,2 +1,21 @@
 ---
-# tasks file for ansible-role-maven
+
+- name: Download Maven TAR.GZ Archive (3.x +)
+  get_url:
+   url: "{{ base_url }}/maven-{{ item.v_major }}/{{ item.v_major }}{{ item.v_minor }}\
+   /binaries/apache-maven-{{ item.v_major }}{{ item.v_minor }}-bin.tar.gz"
+   dest: "/tmp/maven-{{ item.v_major }}{{ item.v_minor }}.tar.gz"
+   checksum: "sha512:{{ base_url }}/maven-{{ item.v_major }}/{{ item.v_major }}{{ item.v_minor }}\
+   /binaries/apache-maven-{{ item.v_major }}{{ item.v_minor }}-bin.tar.gz.sha512"
+  with_items: "{{ __maven_packages }}"
+  when:
+   - item.v_major is defined and item.v_major|int == 3
+
+- name: Download Maven TAR.GZ Archive (2.x)
+  get_url:
+   url: "{{ base_url }}/binaries/apache-maven-{{ item.v_major }}{{ item.v_minor }}-bin.tar.gz"
+   dest: "/tmp/maven-{{ item.v_major }}{{ item.v_minor }}.tar.gz"
+   checksum: "sha1:{{ base_url }}/binaries/apache-maven-{{ item.v_major }}{{ item.v_minor }}-bin.tar.gz.sha1"
+  with_items: "{{ __maven_packages }}"
+  when:
+   - item.v_major is defined and item.v_major|int == 2

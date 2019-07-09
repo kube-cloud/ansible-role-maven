@@ -46,11 +46,3 @@ Author Information
 
 An optional section for the role authors to include contact information, or a
 website (HTML is not allowed).
-
-Apache Maven URLs
------------------
-
-https://www.apache.org/dist/maven/maven-3/3.6.1/binaries/apache-maven-3.6.1-bin.tar.gz                      https://www.apache.org/dist/maven/maven-3/3.6.1/binaries/apache-maven-3.6.1-bin.tar.gz.sha512
-http://archive.apache.org/dist/maven/binaries/apache-maven-2.0.10-bin.tar.gz                                http://archive.apache.org/dist/maven/binaries/apache-maven-2.0.10-bin.tar.bz2.sha1
-
-

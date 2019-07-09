@@ -5,16 +5,20 @@
    __java_packages:
     - from_repo: false
       implementation: OPENJDK
-      v_major: 11
-      v_minor: .0.1
-      build: 13
+      v_major: 8
+      v_minor: 40
+      build: 25
       os: linux
       arch: x64
-      checksum: sha256:7a6bb980b9c91c478421f865087ad2d69086a0583aeeb9e69204785e8e97dcfd
+      date: 10_feb_2015
+      checksum: md5:4980716637f353cfb27467d57f2faf9b
       alternative_priority: 100
       java_home: true
-  
+
+   __maven_packages:
+    - v_major: 3
+      v_minor: .6.1
+      default: true
+
   roles:
-   - role: ansible-role-java
-
-
+   - role: ansible-role-maven
