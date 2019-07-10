@@ -34,3 +34,23 @@ def test_maven_installed(host):
 
     # Check that Maven Home is Directory
     assert maven_home.is_directory
+
+    # Run Maven version
+    maven_version_run = host.run('mvn --version')
+
+    # Get M2_HOME
+    maven_home_run = host.run("echo $M2_HOME").stdout
+
+    # Assert that run os OK
+    assert maven_version_run.rc == 0
+    assert maven_home_run.rc == 0
+
+    #  Extract the maven version
+    maven_version_run_result = maven_version_run.stderr.split('\n')[1]\
+                                                       .split(' ')[2]
+
+    # Check Maven version
+    assert maven_version_run_result == maven_version
+
+    # Check Maven Home
+    assert maven_home_run == maven_home_path
