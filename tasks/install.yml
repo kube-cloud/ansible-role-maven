@@ -16,6 +16,22 @@
     - --strip-components=1
   with_items: "{{ __maven_packages }}"
 
+- name: Find all script files
+  find:
+   file_type: file
+   paths: "{{ install_dir | replace('$v_major', item.v_major) | replace('$v_minor', item.v_minor) }}/bin/"
+   patterns: "mvn,mvnDebug"
+   recurse: false
+   use_regex: false
+  with_items: "{{ __maven_packages }}"
+  register: scripts_find_result
+
+- name: Set execution right to script files
+  file:
+   dest: "{{ item.path }}"
+   mode: "a+rx"
+  with_items: "{{ scripts_find_result.files }}"
+
 - name: Make sure /etc/profile.d/ directory exists
   file:
    path: "/etc/profile.d/"
