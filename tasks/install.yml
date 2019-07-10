@@ -30,19 +30,16 @@
   file:
    dest: "{{ item.path }}"
    mode: "a+rx"
-  with_items: "{{ scripts_find_result.files }}"
+  with_items: "{{ scripts_find_result.results[0].files }}"
 
-- name: Make sure /etc/profile.d/ directory exists
+- name: Set the Maven bin commands links in /usr/bin/
   file:
-   path: "/etc/profile.d/"
-   mode: 0755
-   state: directory
-
-- name: Set the M2_HOME
-  template:
-   src: "templates/maven_home.sh.j2"
-   dest: "/etc/profile.d/maven_home.sh"
+   src: "{{ install_dir | replace('$v_major', item[0].v_major) | replace('$v_minor', item[0].v_minor) }}/bin/{{ item[1] }}"
+   dest: "/usr/bin/{{ item[1] }}"
+   state: link
    mode: a+x
-  with_items: "{{ __maven_packages }}"
+  with_nested:
+   - "{{ __maven_packages }}"
+   - ['mvn', 'mvnDebug']
   when:
-   - item.default
+   - item[0].default
