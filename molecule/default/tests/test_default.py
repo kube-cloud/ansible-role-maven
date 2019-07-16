@@ -9,48 +9,39 @@ testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
 def test_maven_installed(host):
 
     # Maven expected version
-    maven_version = '3.6.1'
+    expected_maven_version = '3.6.1'
 
     # Maven Home Path
-    maven_home_path = '/opt/maven/maven-{}'.format(maven_version)
+    expected_maven_home_path = '/opt/maven/maven-{}'\
+                               .format(expected_maven_version)
 
     # Maven archive file
-    maven_archive_path = '/tmp/maven-{}.tar.gz'.format(maven_version)
+    expected_maven_archive_path = '/tmp/maven-{}.tar.gz'\
+                                  .format(expected_maven_version)
 
-    # Maven Home Dirctory
-    maven_home = host.file(maven_home_path)
+    # Check Maven Home Path exists
+    assert host.file(expected_maven_home_path).exists
+    assert host.file(expected_maven_home_path).is_directory
 
     # Maven Downloaded file
-    maven_archive = host.file(maven_archive_path)
+    maven_archive = host.file(expected_maven_archive_path)
 
     # Check that Maven Archive exists
     assert maven_archive.exists
-
-    # Check that Maven Archive is File
     assert maven_archive.is_file
 
-    # Check that Maven Home exists
-    assert maven_home.exists
-
-    # Check that Maven Home is Directory
-    assert maven_home.is_directory
-
-    # Run Maven version
-    maven_version_run = host.run('mvn --version')
+    # Run Maven home
+    m2_home = host.run('. {} && echo $M2_HOME'
+                       .format('/etc/profile.d/maven_home.sh'))\
+                  .stdout.split('\n')[0]
 
     # Get M2_HOME
-    maven_home_run = host.run("echo $M2_HOME").stdout
+    assert m2_home == expected_maven_home_path
 
-    # Assert that run os OK
-    assert maven_version_run.rc == 0
-    assert maven_home_run.rc == 0
+    # Run Maven version
+    m2_version = host.run('. {} && mvn --version'
+                          .format('/etc/profile.d/java_home.sh'))\
+                     .stdout.split('\n')[0].split(' ')[2]
 
-    #  Extract the maven version
-    maven_version_run_result = maven_version_run.stderr.split('\n')[1]\
-                                                       .split(' ')[2]
-
-    # Check Maven version
-    assert maven_version_run_result == maven_version
-
-    # Check Maven Home
-    assert maven_home_run == maven_home_path
+    # Check maven version
+    assert m2_version == expected_maven_version

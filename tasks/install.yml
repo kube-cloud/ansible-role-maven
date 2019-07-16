@@ -43,3 +43,18 @@
    - ['mvn', 'mvnDebug']
   when:
    - item[0].default
+
+- name: Make sure /etc/profile.d/ directory exists
+  file:
+   path: "/etc/profile.d/"
+   mode: 0755
+   state: directory
+
+- name: Set the M2_HOME
+  template:
+   src: "templates/maven_home.sh.j2"
+   dest: "/etc/profile.d/maven_home.sh"
+   mode: a+x
+  with_items: "{{ __maven_packages }}"
+  when:
+   - item.default is defined and item.default

@@ -2,6 +2,3 @@
 
 # Export M2_HOME
 export M2_HOME={{ install_dir | replace('$v_major', item.v_major) | replace('$v_minor', item.v_minor) }}
-
-# Set Path
-export PATH=$M2_HOME/bin:$PATH
