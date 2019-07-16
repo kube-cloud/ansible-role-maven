@@ -2,13 +2,13 @@
 
 ![Python](https://img.shields.io/pypi/pyversions/testinfra.svg?style=flat)
 ![Licence](https://img.shields.io/github/license/kube-cloud/ansible-role-maven.svg?style=flat)
-![Travis Build](https://img.shields.io/travis/kube-cloud/ansible-role-maven.svg?style=flat)
-
+[![Travis Build](https://img.shields.io/travis/kube-cloud/ansible-role-maven.svg?style=flat)](https://travis-ci.com/kube-cloud/ansible-role-maven)
 
 Ansible role used to install Maven on Linux based Operating System.
 
-[![](https://kube-cloud.com/images/branding/logo/kubecloud-logo-single_writing_horizontal_color_300x112px.png)](https://www.kube-cloud.com/)
-<img width="200" src="https://getvectorlogo.com/wp-content/uploads/2019/01/red-hat-ansible-vector-logo.png">  
+<a href="https://www.kube-cloud.com/"><img width="300" src="https://kube-cloud.com/images/branding/logo/kubecloud-logo-single_writing_horizontal_color_300x112px.png" /></a>
+<a href="https://www.redhat.com/fr/technologies/management/ansible"><img width="200" src="https://getvectorlogo.com/wp-content/uploads/2019/01/red-hat-ansible-vector-logo.png" /></a>
+<a href="https://maven.apache.org/"><img width="250" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Maven_logo.svg/1280px-Maven_logo.svg.png" /></a>
 
 # Supported Version
 
