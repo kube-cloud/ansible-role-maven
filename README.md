@@ -30,27 +30,29 @@ Ansible role used to install Maven on Linux based Operating System.
 * Install Role ``` ansible-galaxy install jetune.maven ```
 * use in your playbook
 ```
+---
 - hosts: all
 
   roles:
-    - jetune.maven
+   - role: jetune.java
+     vars:
+      from_repo: false
+      implementation: OPENJDK
+      v_major: 11
+      v_minor: 0.1
+      build: 13
+      os: linux
+      arch: x64
+      checksum: sha256:7a6bb980b9c91c478421f865087ad2d69086a0583aeeb9e69204785e8e97dcfd
+      alternative_priority: 300
+      is_default: true
 
-  vars:
-    
-    # Configure jetune.java role
-	__java_packages:
+   - role: ansible-role-maven
+     vars:
+      v_major: 3
+      v_minor: 6.1
+      is_default: true
 
- 	 # JDK packages to install from repo (Open JDK version 8, install alrenative with priority 100 )
- 	 - from_repo: true
- 	 v_major: 8
- 	 alternative_priority: 100
- 	 implementation: OPENJDK
- 	
-   # Configure jetune.maven role 
-   __maven_packages:
-    - v_major: 3
-      v_minor: .6.1
-      default: true
 
 ```
 
