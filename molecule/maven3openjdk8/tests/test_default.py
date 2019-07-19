@@ -12,7 +12,7 @@ def test_maven_installed(host):
     maven_major = '3'
 
     # Maven expected version minor
-    maven_minor = '6.1'
+    maven_minor = '2.5'
 
     # Maven expected version
     expected_maven_version = maven_major + '.' + maven_minor
