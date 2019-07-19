@@ -1,9 +1,11 @@
 ---
 - name: Converge
   hosts: all
-  vars:
-   __java_packages:
-    - from_repo: false
+
+  roles:
+   - role: jetune.java
+     vars:
+      from_repo: false
       implementation: OPENJDK
       v_major: 8
       v_minor: 40
@@ -12,13 +14,11 @@
       arch: x64
       date: 10_feb_2015
       checksum: md5:4980716637f353cfb27467d57f2faf9b
-      alternative_priority: 100
-      java_home: true
+      alternative_priority: 300
+      is_default: true
 
-   __maven_packages:
-    - v_major: 3
-      v_minor: .6.1
-      default: true
-
-  roles:
    - role: ansible-role-maven
+     vars:
+      v_major: 3
+      v_minor: 2.5
+      is_default: true

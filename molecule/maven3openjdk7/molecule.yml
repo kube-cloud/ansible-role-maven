@@ -11,9 +11,9 @@ driver:
 lint:
     name: yamllint
     options:
-        config-file: molecule/default/yaml-lint.yml
+        config-file: molecule/maven3openjdk7/yaml-lint.yml
 platforms:
-    - name: CentOS7
+    - name: ${MOLECULE_DISTRO:-centos7}
       image: "kubecloudsas/docker-ansible-test:${MOLECULE_DISTRO:-centos7}"
       command: ${MOLECULE_DOCKER_COMMAND:-""}
       volumes:
@@ -32,30 +32,9 @@ provisioner:
     playbooks:
         converge: ${MOLECULE_PLAYBOOK:-playbook.yml}
 scenario:
-    name: default
-    create_sequence:
-        - create
-        - prepare
-    check_sequence:
-        - destroy
-        - dependency
-        - create
-        - prepare
-        - converge
-        - check
-        - destroy
-    converge_sequence:
-        - dependency
-        - create
-        - prepare
-        - converge
-    destroy_sequence:
-        - cleanup
-        - destroy
+    name: maven3openjdk7
     test_sequence:
         - lint
-        - create
-        - destroy
         - dependency
         - syntax
         - create

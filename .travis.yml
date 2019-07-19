@@ -15,6 +15,7 @@ env:
         - AUTHOR: jetune
     matrix:
         - MOLECULE_DISTRO: centos7
+        - MOLECULE_DISTRO: ubuntu16
         - MOLECULE_DISTRO: ubuntu18
 
 # Installation actions
@@ -33,7 +34,7 @@ install:
 script:
 
     # Run Tests
-    - molecule test
+    - molecule test --all
 
 # Norifications
 notifications:

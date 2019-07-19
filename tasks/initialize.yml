@@ -1,9 +1,36 @@
 ---
 
-- name: Define installation directory for maven
+- name: ({{ ansible_distribution }}) Check Maven required parameters (v_major, v_minor)
+  fail:
+   msg: "Vérifier les paramètres obligatoires : (v_major, v_minor)"
+  when: >
+   v_major is not defined or
+   v_minor is not defined
+
+- name: ({{ ansible_distribution }}) Check Maven minimum version (v_major >= 3)
+  fail:
+   msg: "Vérifier la version de maven que vous souhaitez installer : MIN V3+"
+  when:
+   v_major|int < 3
+
+- name: ({{ ansible_distribution }}) Define commons facts
   set_fact:
-   install_dir: "/opt/maven/maven-$v_major$v_minor"
-   url_3_x: "https://archive.apache.org/dist/maven/maven-$v_major/$v_major$v_minor\
-   /binaries/apache-maven-$v_major$v_minor-bin.tar.gz"
-   url_2_x: "https://archive.apache.org/dist/maven/binaries/apache-maven-$v_major$v_minor-bin.tar.gz"
-   dest_archive: "/tmp/maven-$v_major$v_minor.tar.gz"
+   install_dir: "/opt/maven/maven-{{ v_major }}.{{ v_minor }}"
+   downloaded_file: "/tmp/maven-{{ v_major }}.{{ v_minor }}.tar.gz"
+   mvn_default: "{{ is_default | default(true) }}"
+   alternatives:
+    - 'mvn'
+    - 'mvnDebug'
+
+- name: ({{ ansible_distribution }}) Define version specific facts [Version = {{ v_major }}]
+  set_fact:
+   url: "https://archive.apache.org/dist/maven/maven-{{ v_major }}/{{ v_major }}.{{ v_minor }}\
+   /binaries/apache-maven-{{ v_major }}.{{ v_minor }}-bin.tar.gz"
+  when:
+   - v_major|int == 3
+
+- name: ({{ ansible_distribution }}) Define version specific facts [Version = {{ v_major }}]
+  set_fact:
+   url: "https://archive.apache.org/dist/maven/binaries/apache-maven-{{ v_major }}.{{ v_minor }}-bin.tar.gz"
+  when:
+   - v_major|int == 2

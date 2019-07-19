@@ -1,60 +1,60 @@
 ---
 
-- name: Create installation directories
+- name: ({{ ansible_distribution }}) Create installation directories
   file:
-   path: "{{ install_dir | replace('$v_major', item.v_major) | replace('$v_minor', item.v_minor) }}"
+   path: "{{ install_dir }}"
    state: directory
-  with_items: "{{ __maven_packages }}"
 
-- name: Unarchive Downloaded maven archives
+- name: ({{ ansible_distribution }}) Unarchive Downloaded maven archives
   unarchive:
-   src: "{{ dest_archive | replace('$v_major', item.v_major) | replace('$v_minor', item.v_minor) }}"
-   dest: "{{ install_dir | replace('$v_major', item.v_major) | replace('$v_minor', item.v_minor) }}"
-   creates: "{{ install_dir | replace('$v_major', item.v_major) | replace('$v_minor', item.v_minor) }}/bin/mvn"
+   src: "{{ downloaded_file }}"
+   dest: "{{ install_dir }}"
+   creates: "{{ install_dir }}/bin/mvn"
    remote_src: true
    extra_opts:
     - --strip-components=1
-  with_items: "{{ __maven_packages }}"
 
-- name: Find all script files
+- name: ({{ ansible_distribution }}) Find all script files
   find:
    file_type: file
-   paths: "{{ install_dir | replace('$v_major', item.v_major) | replace('$v_minor', item.v_minor) }}/bin/"
+   paths: "{{ install_dir }}/bin/"
    patterns: "mvn,mvnDebug"
    recurse: false
    use_regex: false
-  with_items: "{{ __maven_packages }}"
   register: scripts_find_result
 
-- name: Set execution right to script files
+- name: ({{ ansible_distribution }}) Print Find task register result JSON
+  debug:
+   var: scripts_find_result
+
+- name: ({{ ansible_distribution }}) Set execution right to script files
   file:
    dest: "{{ item.path }}"
    mode: "a+rx"
-  with_items: "{{ scripts_find_result.results[0].files }}"
+  with_items: "{{ scripts_find_result.files }}"
 
-- name: Set the Maven bin commands links in /usr/bin/
+- name: ({{ ansible_distribution }}) Set the Maven bin commands links in /usr/bin/
   file:
-   src: "{{ install_dir | replace('$v_major', item[0].v_major) | replace('$v_minor', item[0].v_minor) }}/bin/{{ item[1] }}"
-   dest: "/usr/bin/{{ item[1] }}"
+   src: "{{ install_dir }}/bin/{{ item }}"
+   dest: "/usr/bin/{{ item }}"
    state: link
    mode: a+x
-  with_nested:
-   - "{{ __maven_packages }}"
-   - ['mvn', 'mvnDebug']
+  with_items: "{{ alternatives }}"
   when:
-   - item[0].default
+   - mvn_default
 
-- name: Make sure /etc/profile.d/ directory exists
+- name: ({{ ansible_distribution }}) Make sure /etc/profile.d/ directory exists
   file:
    path: "/etc/profile.d/"
    mode: 0755
    state: directory
+  when:
+   - mvn_default
 
-- name: Set the M2_HOME
+- name: ({{ ansible_distribution }}) Set the M2_HOME
   template:
    src: "templates/maven_home.sh.j2"
    dest: "/etc/profile.d/maven_home.sh"
    mode: a+x
-  with_items: "{{ __maven_packages }}"
   when:
-   - item.default is defined and item.default
+   - mvn_default

@@ -1,19 +1,7 @@
 ---
 
-- name: Download Maven TAR.GZ Archive (3.x +)
+- name: ({{ ansible_distribution }}) Download Maven Archive ( URL = {{ url }}, DEST = {{ downloaded_file }})
   get_url:
-   url: "{{ url_3_x | replace('$v_major', item.v_major) | replace('$v_minor', item.v_minor) }}"
-   dest: "{{ dest_archive | replace('$v_major', item.v_major) | replace('$v_minor', item.v_minor) }}"
-   checksum: "sha512:{{ url_3_x | replace('$v_major', item.v_major) | replace('$v_minor', item.v_minor) }}.sha512"
-  with_items: "{{ __maven_packages }}"
-  when:
-   - item.v_major is defined and item.v_major|int == 3
-
-- name: Download Maven TAR.GZ Archive (2.x)
-  get_url:
-   url: "{{ url_2_x | replace('$v_major', item.v_major) | replace('$v_minor', item.v_minor) }}"
-   dest: "{{ dest_archive | replace('$v_major', item.v_major) | replace('$v_minor', item.v_minor) }}"
-   checksum: "sha1:{{ url_2_x | replace('$v_major', item.v_major) | replace('$v_minor', item.v_minor) }}.sha1"
-  with_items: "{{ __maven_packages }}"
-  when:
-   - item.v_major is defined and item.v_major|int == 2
+   url: "{{ url }}"
+   dest: "{{ downloaded_file }}"
+   checksum: "sha512:{{ url }}.sha512"

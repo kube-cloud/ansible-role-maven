@@ -8,8 +8,14 @@ testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
 
 def test_maven_installed(host):
 
+    # Maven expected version major
+    maven_major = '3'
+
+    # Maven expected version minor
+    maven_minor = '6.1'
+
     # Maven expected version
-    expected_maven_version = '3.6.1'
+    expected_maven_version = maven_major + '.' + maven_minor
 
     # Maven Home Path
     expected_maven_home_path = '/opt/maven/maven-{}'\
