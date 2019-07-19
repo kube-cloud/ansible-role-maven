@@ -47,7 +47,7 @@ Ansible role used to install Maven on Linux based Operating System.
       alternative_priority: 300
       is_default: true
 
-   - role: ansible-role-maven
+   - role: jetune.maven
      vars:
       v_major: 3
       v_minor: 6.1
