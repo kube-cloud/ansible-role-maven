@@ -4,4 +4,4 @@
   get_url:
    url: "{{ url }}"
    dest: "{{ downloaded_file }}"
-   checksum: "sha512:{{ url }}.sha512"
+   checksum: "md5:{{ url }}.md5"

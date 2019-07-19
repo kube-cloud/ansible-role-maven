@@ -22,15 +22,9 @@
     - 'mvn'
     - 'mvnDebug'
 
-- name: ({{ ansible_distribution }}) Define version specific facts [Version = {{ v_major }}]
+- name: ({{ ansible_distribution }}) Define version specific facts [Version = {{ v_major }}.{{ v_minor }}]
   set_fact:
    url: "https://archive.apache.org/dist/maven/maven-{{ v_major }}/{{ v_major }}.{{ v_minor }}\
    /binaries/apache-maven-{{ v_major }}.{{ v_minor }}-bin.tar.gz"
   when:
    - v_major|int == 3
-
-- name: ({{ ansible_distribution }}) Define version specific facts [Version = {{ v_major }}]
-  set_fact:
-   url: "https://archive.apache.org/dist/maven/binaries/apache-maven-{{ v_major }}.{{ v_minor }}-bin.tar.gz"
-  when:
-   - v_major|int == 2
