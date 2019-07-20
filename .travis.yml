@@ -16,7 +16,7 @@ env:
     matrix:
         - MOLECULE_DISTRO: centos6
         - MOLECULE_DISTRO: centos7
-        - MOLECULE_DISTRO: ubuntu18
+        - MOLECULE_DISTRO: ubuntu16
         - MOLECULE_DISTRO: ubuntu18
 
 before_install:
