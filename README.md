@@ -1,8 +1,9 @@
-# Ansible Linux based Java role
+# Ansible Linux based Maven role
 
 ![Python](https://img.shields.io/pypi/pyversions/testinfra.svg?style=flat)
 ![Licence](https://img.shields.io/github/license/kube-cloud/ansible-role-maven.svg?style=flat)
 [![Travis Build](https://img.shields.io/travis/kube-cloud/ansible-role-maven.svg?style=flat)](https://travis-ci.com/kube-cloud/ansible-role-maven)
+[![Galaxy Role Downloads](https://img.shields.io/ansible/role/d/41894.svg?style=flat)](https://galaxy.ansible.com/jetune/maven)
 
 Ansible role used to install Maven on Linux based Operating System.
 
