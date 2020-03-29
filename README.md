@@ -50,9 +50,9 @@ Ansible role used to install Maven on Linux based Operating System.
 
    - role: jetune.maven
      vars:
-      v_major: 3
-      v_minor: 6.1
-      is_default: true
+      maven_v_major: 3
+      maven_v_minor: 6.1
+      maven_is_default: true
       maven_settings_directory: "~/.m2/"
       maven_local_repository: "/opt/maven/repository"
       maven_proxies:
