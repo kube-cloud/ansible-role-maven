@@ -5,13 +5,10 @@ dependency:
         role-file: molecule/requirement.yml
         ignore-certs: true
         ignore-errors: true
-    enabled: true
 driver:
     name: docker
-lint:
-    name: yamllint
-    options:
-        config-file: molecule/maven3openjdk7/yaml-lint.yml
+lint: |
+    yamllint .
 platforms:
     - name: ${MOLECULE_DISTRO:-centos7}
       image: "kubecloudsas/docker-ansible-test:${MOLECULE_DISTRO:-centos7}"
@@ -20,6 +17,7 @@ platforms:
           - /sys/fs/cgroup:/sys/fs/cgroup:ro
       privileged: true
       pre_build_image: true
+      pull: true
 
 provisioner:
     name: ansible

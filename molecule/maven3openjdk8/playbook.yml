@@ -22,3 +22,26 @@
       v_major: 3
       v_minor: 2.5
       is_default: true
+      maven_settings_directory: "~/.m2/"
+      maven_local_repository: "/opt/maven/repository"
+      maven_proxies:
+       - id: "cntlm_maven_proxy"
+         active: true
+         protocol: "http"
+         username: "jetune"
+         password: "mypassword"
+         host: "localhost"
+         port: 3286
+         exclusions: "localhost|127.0.0.1|some.other.host"
+      maven_servers:
+       - id: "sonatype-nexus"
+         username: "admin"
+         password: "admin"
+       - id: "bitbucket"
+         privateKey: "/opt/security/key"
+         passphrase: "p@ssw0rd"
+      maven_mirrors:
+       - id: "mirror-central"
+         name: "Central maven repository mirror"
+         target: "central"
+         url: "https://artifact.lab.kube-cloud.be/repository/maven-central/"
