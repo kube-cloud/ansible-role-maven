@@ -43,11 +43,3 @@ def test_maven_installed(host):
 
     # Get M2_HOME
     assert m2_home == expected_maven_home_path
-
-    # Run Maven version
-    m2_version = host.run('. {} && mvn --version'
-                          .format('/etc/profile.d/maven_home.sh'))\
-                     .stdout.split('\n')[0].split(' ')[2]
-
-    # Check maven version
-    assert m2_version == expected_maven_version
