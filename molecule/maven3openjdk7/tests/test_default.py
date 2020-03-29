@@ -46,7 +46,7 @@ def test_maven_installed(host):
 
     # Run Maven version
     m2_version = host.run('. {} && mvn --version'
-                          .format('/etc/profile.d/java_home.sh'))\
+                          .format('/etc/profile.d/maven_home.sh'))\
                      .stdout.split('\n')[0].split(' ')[2]
 
     # Check maven version
