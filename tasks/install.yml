@@ -2,14 +2,14 @@
 
 - name: ({{ ansible_distribution }}) Create installation directories
   file:
-   path: "{{ install_dir }}"
+   path: "{{ maven_install_dir }}"
    state: directory
 
 - name: ({{ ansible_distribution }}) Unarchive Downloaded maven archives
   unarchive:
-   src: "{{ downloaded_file }}"
-   dest: "{{ install_dir }}"
-   creates: "{{ install_dir }}/bin/mvn"
+   src: "{{ maven_downloaded_file }}"
+   dest: "{{ maven_install_dir }}"
+   creates: "{{ maven_install_dir }}/bin/mvn"
    remote_src: true
    extra_opts:
     - --strip-components=1
@@ -17,7 +17,7 @@
 - name: ({{ ansible_distribution }}) Find all script files
   find:
    file_type: file
-   paths: "{{ install_dir }}/bin/"
+   paths: "{{ maven_install_dir }}/bin/"
    patterns: "mvn,mvnDebug"
    recurse: false
    use_regex: false
@@ -35,13 +35,13 @@
 
 - name: ({{ ansible_distribution }}) Set the Maven bin commands links in /usr/bin/
   file:
-   src: "{{ install_dir }}/bin/{{ item }}"
+   src: "{{ maven_install_dir }}/bin/{{ item }}"
    dest: "/usr/bin/{{ item }}"
    state: link
    mode: a+x
-  with_items: "{{ alternatives }}"
+  with_items: "{{ maven_alternatives }}"
   when:
-   - mvn_default
+   - maven_is_default
 
 - name: ({{ ansible_distribution }}) Make sure /etc/profile.d/ directory exists
   file:
@@ -49,7 +49,7 @@
    mode: 0755
    state: directory
   when:
-   - mvn_default
+   - maven_is_default
 
 - name: ({{ ansible_distribution }}) Set the M2_HOME
   template:
@@ -57,7 +57,7 @@
    dest: "/etc/profile.d/maven_home.sh"
    mode: a+x
   when:
-   - mvn_default
+   - maven_is_default
 
 - name: ({{ ansible_distribution }}) Make sure {{ maven_settings_directory }} directory exists
   file:

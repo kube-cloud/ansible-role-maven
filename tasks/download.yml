@@ -2,5 +2,5 @@
 
 - name: ({{ ansible_distribution }}) Download Maven Archive ( URL = {{ url }}, DEST = {{ downloaded_file }})
   get_url:
-   url: "{{ url }}"
-   dest: "{{ downloaded_file }}"
+   url: "{{ maven_url }}"
+   dest: "{{ maven_downloaded_file }}"
