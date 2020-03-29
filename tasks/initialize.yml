@@ -5,3 +5,7 @@
    msg: "Vérifier la version de maven que vous souhaitez installer : MIN V3+"
   when:
    maven_v_major|int < 3
+
+- name: ({{ ansible_distribution }}) Define maven settings repository
+  set_fact:
+   maven_settings_directory: "{{ '/root' if maven_user == 'root' else '/home/' + maven_user }}/.m2"

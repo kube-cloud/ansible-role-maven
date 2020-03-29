@@ -64,15 +64,21 @@
    path: "{{ maven_settings_directory }}"
    mode: 0644
    state: directory
+   owner: "{{ maven_user }}"
+   group: "{{ maven_group }}"
 
 - name: ({{ ansible_distribution }}) Make sure {{ maven_local_repository }} directory exists
   file:
    path: "{{ maven_local_repository }}"
    mode: 0766
    state: directory
+   owner: "{{ maven_user }}"
+   group: "{{ maven_group }}"
 
 - name: ({{ ansible_distribution }}) Generate Maven Settings
   template:
    src: "templates/maven_settings.xml.j2"
    dest: "{{ maven_settings_directory | regex_replace('\\/$', '') }}/settings.xml"
    mode: 0644
+   owner: "{{ maven_user }}"
+   group: "{{ maven_group }}"

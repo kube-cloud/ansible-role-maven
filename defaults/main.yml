@@ -1,4 +1,6 @@
 ---
+maven_user: "root"
+maven_group: "root"
 maven_v_major: "3"
 maven_v_minor: "0.5"
 maven_is_default: true
@@ -9,7 +11,6 @@ maven_downloaded_file: "/tmp/maven-{{ maven_v_major }}.{{ maven_v_minor }}.tar.g
 maven_alternatives:
   - 'mvn'
   - 'mvnDebug'
-maven_settings_directory: "~/.m2/"
 maven_local_repository: "/opt/maven/repository"
 maven_plugins_group: []
 # - "org.sonatype.nexus.group"

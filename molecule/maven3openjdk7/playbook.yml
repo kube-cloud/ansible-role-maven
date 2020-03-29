@@ -1,8 +1,6 @@
 ---
 - name: Converge
   hosts: all
-  debugger: on_failed
-  strategy: debug
 
   roles:
    - role: jetune.java
@@ -24,7 +22,8 @@
       maven_v_major: 3
       maven_v_minor: 0.5
       maven_is_default: true
-      maven_settings_directory: "~/.m2/"
+      maven_user: "root"
+      maven_group: "root"
       maven_local_repository: "/opt/maven/repository"
       maven_proxies:
        - id: "cntlm_maven_proxy"
