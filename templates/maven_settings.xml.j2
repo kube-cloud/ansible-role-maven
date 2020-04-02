@@ -113,13 +113,13 @@
 {% endif %}
 			
 			<!-- Mirror name -->
-			<name>{{ maven_mirror.target | default('Central maven repository mirror') }}</name>
+			<name>{{ maven_mirror.name | default('Central maven repository mirror') }}</name>
 			
 			<!-- Mirror target -->
 			<mirrorOf>{{ maven_mirror.target | default('central') }}</mirrorOf>
 			
 			<!-- Mirror URL -->
-			<url>{{ maven_mirror.target | default('https://artifact.lab.kube-cloud.be/repository/maven-central/') }}</url>
+			<url>{{ maven_mirror.url | default('https://artifact.lab.kube-cloud.be/repository/maven-central/') }}</url>
 			
 		</mirror>
 {% endfor %}

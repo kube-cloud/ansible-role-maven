@@ -51,6 +51,15 @@
   when:
    - maven_is_default
 
+- name: ({{ ansible_distribution }}) Set the M2_* variable in global environment file
+  lineinfile:
+   dest: "/etc/environment"
+   regexp: "{{ item.key }}="
+   line: "{{ item.key }}={{ item.value }}"
+  loop:
+   - key: "M2_HOME"
+     value: "{{ install_dir }}"
+
 - name: ({{ ansible_distribution }}) Set the M2_HOME
   template:
    src: "templates/maven_home.sh.j2"
@@ -62,7 +71,7 @@
 - name: ({{ ansible_distribution }}) Make sure {{ maven_settings_directory }} directory exists
   file:
    path: "{{ maven_settings_directory }}"
-   mode: 0644
+   mode: 0755
    state: directory
    owner: "{{ maven_user }}"
    group: "{{ maven_group }}"
@@ -70,7 +79,7 @@
 - name: ({{ ansible_distribution }}) Make sure {{ maven_local_repository }} directory exists
   file:
    path: "{{ maven_local_repository }}"
-   mode: 0766
+   mode: 0755
    state: directory
    owner: "{{ maven_user }}"
    group: "{{ maven_group }}"
@@ -79,6 +88,6 @@
   template:
    src: "templates/maven_settings.xml.j2"
    dest: "{{ maven_settings_directory | regex_replace('\\/$', '') }}/settings.xml"
-   mode: 0644
+   mode: 0755
    owner: "{{ maven_user }}"
    group: "{{ maven_group }}"
